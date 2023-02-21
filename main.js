@@ -8,10 +8,6 @@ const campoSelector=document.querySelector('#selector');
 const tabla=document.querySelector("#tabla")
 
 
-// pintarGeneros()
-// const campoSelector=document.querySelector('.selector');
-
-
 let fragment = document.createDocumentFragment()
 
 //todo Arrays
@@ -62,13 +58,13 @@ function validarFormulario() {
     const director = campoDirector.value;
     const year = campoYear.value
     const generos=campoSelector.value
-    console.log(generos);
+   
 
     if (isNaN(titulo) && titulo.trim().length > 0) {
         objValidar.titulo = true
         objPelicula.titulo=titulo
     } else {
-        objValidar.titulo = false
+
         alert("te falta el titulo")
     }
 
@@ -76,7 +72,7 @@ function validarFormulario() {
         objValidar.director = true
         objPelicula.director=director
     } else {
-        objValidar.director = false
+        
         alert("te falta el director")
     }
 
@@ -86,22 +82,21 @@ function validarFormulario() {
     } 
     else if (year < 999) {
         alert("el año tiene que ser mayor que 999")
-        objValidar.year = false
+        
     } else if (year > 10000) {
         alert("el año tiene que ser menor que 10000")
-        objValidar.year = false
+        
     }
     if(generos != "seleccione genero"){
         objValidar.genero = true
         objPelicula.genero= generos
     }else{
         alert("introduce un genero")
-        objValidar.genero = false
+       
     }
 
     const arrayValidar = Object.values(objValidar)
-
-
+    
     const valida = arrayValidar.findIndex(item => item == false);
     
 
@@ -116,24 +111,29 @@ function validarFormulario() {
 
 
 function pintarTabla(array) {
+
     let tr=document.createElement("tr")
              tabla.append(tr)
 
         array.forEach(({titulo,director,year,genero}) => {
-            let tdTitulo=document.createElement("td")
-                tdTitulo.textContent=titulo
-            let tdDirector=document.createElement("td")
-                tdDirector.textContent=director
-            let tdYear=document.createElement("td")
-                tdYear.textContent=year
-            let tdGenero=document.createElement("td")
-                tdGenero.textContent=genero
-            
 
-            tr.append(tdTitulo)
-            tr.append(tdDirector)
-            tr.append(tdYear)
-            tr.append(tdGenero)
+            // let tdTitulo=document.createElement("td")
+            //     tdTitulo.textContent=titulo
+            // let tdDirector=document.createElement("td")
+            //     tdDirector.textContent=director
+            // let tdYear=document.createElement("td")
+            //     tdYear.textContent=year
+            // let tdGenero=document.createElement("td")
+            //     tdGenero.textContent=genero
+            tr.innerHTML= ` <td>${titulo}</td>
+                            <td>${director}</td>
+                            <td>${year}</td>
+                            <td>${genero}</td>`
+            
+            // tr.append(tdTitulo)
+            // tr.append(tdDirector)
+            // tr.append(tdYear)
+            // tr.append(tdGenero)
         });
         arrayPeliculas=[]
 }

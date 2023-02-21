@@ -15,7 +15,10 @@ const tabla=document.querySelector("#tabla")
 let fragment = document.createDocumentFragment()
 
 //todo Arrays
+
 let generos = ["seleccione genero", "terror", "accion", "romantica", "comedia"]
+
+let arrayPeliculas=[]
 
 //todo Objetos 
 let objValidar = {
@@ -24,6 +27,8 @@ let objValidar = {
     year: false,
     genero:false,
 }
+
+
 let objPelicula={
     titulo:null,
     director:null,
@@ -98,34 +103,57 @@ function validarFormulario() {
 
 
     const valida = arrayValidar.findIndex(item => item == false);
-    console.log(valida);
+    
 
     if (valida === -1) {
         alert("pa alante")
-       return pintarTabla(objPelicula);
+        arrayPeliculas.push(objPelicula)
+        return  pintarTabla(arrayPeliculas) 
     }
 }
 
 //todo Despues de validar el formulario pintar en la tabla 
 
-function pintarTabla(object) {
+
+function pintarTabla(array) {
     let tr=document.createElement("tr")
-    tabla.append(tr)
+             tabla.append(tr)
 
-    let valores = Object.keys(object);
-    for(let i=0; i< valores.length; i++){
-      let td=document.createElement("td")
-      let clave = valores[i];
-      td.textContent=clave
-      tr.append(td)
-    }
+        array.forEach(({titulo,director,year,genero}) => {
+            let tdTitulo=document.createElement("td")
+                tdTitulo.textContent=titulo
+            let tdDirector=document.createElement("td")
+                tdDirector.textContent=director
+            let tdYear=document.createElement("td")
+                tdYear.textContent=year
+            let tdGenero=document.createElement("td")
+                tdGenero.textContent=genero
+            
 
+            tr.append(tdTitulo)
+            tr.append(tdDirector)
+            tr.append(tdYear)
+            tr.append(tdGenero)
+        });
+        arrayPeliculas=[]
 }
-
 
 pintarGeneros()
 
+// console.log(arrayPeliculas);
 
 
 
+// function pintarTabla(object) {
+//     let tr=document.createElement("tr")
+//     tabla.append(tr)
 
+//     let valores = Object.keys(object);
+//     for(let i=0; i< valores.length; i++){
+//       let td=document.createElement("td")
+//       let clave = valores[i];
+//       td.textContent=clave
+//       tr.append(td)
+//     }
+
+// }

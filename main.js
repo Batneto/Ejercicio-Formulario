@@ -110,7 +110,7 @@ function validarFormulario() {
 //todo Despues de validar el formulario pintar en la tabla 
 
 
-function pintarTabla(array) {
+function pintarTabla(arrayPeliculas) {
 
     let tr=document.createElement("tr")
              tabla.append(tr)
@@ -135,10 +135,11 @@ function pintarTabla(array) {
             // tr.append(tdYear)
             // tr.append(tdGenero)
         });
-        arrayPeliculas=[]
+        // arrayPeliculas=[]
 }
 
 pintarGeneros()
+console.log(arrayPeliculas);
 
 // console.log(arrayPeliculas);
 

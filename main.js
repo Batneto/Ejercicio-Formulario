@@ -6,6 +6,8 @@ const campoDirector = document.querySelector('#director');
 const campoYear = document.querySelector('#year');
 const campoSelector=document.querySelector('#selector');
 const tabla=document.querySelector("#tabla")
+let fecha= new Date()
+let today=fecha.getFullYear();
 
 
 let fragment = document.createDocumentFragment()
@@ -17,12 +19,19 @@ let generos = ["seleccione genero", "terror", "accion", "romantica", "comedia"]
 let arrayPeliculas=[]
 
 //todo Objetos 
+
 let objValidar = {
     titulo: false,
     director: false,
     year: false,
     genero:false,
 }
+
+let regExp={
+    nombres:/([a-zÀ-ÿ\-]\s*)+/gi,
+    today:today
+}
+
 
 
 let objPelicula={
@@ -62,36 +71,34 @@ function validarFormulario() {
 
     if (isNaN(titulo) && titulo.trim().length > 0) {
         objValidar.titulo = true
-        objPelicula.titulo=titulo
+        
     } else {
-
         alert("te falta el titulo")
+        objValidar.titulo=false
     }
 
     if (isNaN(director) && director.trim().length > 0) {
         objValidar.director = true
-        objPelicula.director=director
-    } else {
         
+    } else {
         alert("te falta el director")
+        objValidar.director=false
     }
 
     if (!(isNaN(year)) && year > 999 && year < 10000) {
         objValidar.year = true
-        objPelicula.year=year
     } 
-    else if (year < 999) {
-        alert("el año tiene que ser mayor que 999")
+    else {
+        alert("introduce un año valido")
+        objValidar.year=false
         
-    } else if (year > 10000) {
-        alert("el año tiene que ser menor que 10000")
-        
-    }
+    } 
     if(generos != "seleccione genero"){
         objValidar.genero = true
-        objPelicula.genero= generos
+        
     }else{
         alert("introduce un genero")
+        objValidar.genero=false
        
     }
 
@@ -102,6 +109,12 @@ function validarFormulario() {
 
     if (valida === -1) {
         alert("pa alante")
+        let objPelicula={
+            titulo,
+            director,
+            year,
+            generos,
+        }
         arrayPeliculas.push(objPelicula)
         return  pintarTabla(arrayPeliculas) 
     }
@@ -110,51 +123,34 @@ function validarFormulario() {
 //todo Despues de validar el formulario pintar en la tabla 
 
 
-function pintarTabla(arrayPeliculas) {
+function pintarTabla(array) {
 
     let tr=document.createElement("tr")
              tabla.append(tr)
 
-        array.forEach(({titulo,director,year,genero}) => {
+        array.forEach(({titulo,director,year,generos}) => {
 
-            // let tdTitulo=document.createElement("td")
-            //     tdTitulo.textContent=titulo
-            // let tdDirector=document.createElement("td")
-            //     tdDirector.textContent=director
-            // let tdYear=document.createElement("td")
-            //     tdYear.textContent=year
-            // let tdGenero=document.createElement("td")
-            //     tdGenero.textContent=genero
-            tr.innerHTML= ` <td>${titulo}</td>
-                            <td>${director}</td>
-                            <td>${year}</td>
-                            <td>${genero}</td>`
+            let tdTitulo=document.createElement("td")
+                tdTitulo.textContent=titulo
+            let tdDirector=document.createElement("td")
+                tdDirector.textContent=director
+            let tdYear=document.createElement("td")
+                tdYear.textContent=year
+            let tdGenero=document.createElement("td")
+                tdGenero.textContent=generos
+            // tr.innerHTML= ` <td>${titulo}</td>
+            //                 <td>${director}</td>
+            //                 <td>${year}</td>
+            //                 <td>${genero}</td>`
             
-            // tr.append(tdTitulo)
-            // tr.append(tdDirector)
-            // tr.append(tdYear)
-            // tr.append(tdGenero)
+            tr.append(tdTitulo)
+            tr.append(tdDirector)
+            tr.append(tdYear)
+            tr.append(tdGenero)
         });
-        // arrayPeliculas=[]
+        arrayPeliculas=[]
 }
 
 pintarGeneros()
 console.log(arrayPeliculas);
 
-// console.log(arrayPeliculas);
-
-
-
-// function pintarTabla(object) {
-//     let tr=document.createElement("tr")
-//     tabla.append(tr)
-
-//     let valores = Object.keys(object);
-//     for(let i=0; i< valores.length; i++){
-//       let td=document.createElement("td")
-//       let clave = valores[i];
-//       td.textContent=clave
-//       tr.append(td)
-//     }
-
-// }

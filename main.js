@@ -10,6 +10,9 @@ let fecha= new Date()
 let today=fecha.getFullYear();
 
 
+
+
+
 let fragment = document.createDocumentFragment()
 
 //todo Arrays
@@ -17,6 +20,8 @@ let fragment = document.createDocumentFragment()
 let generos = ["seleccione genero", "terror", "accion", "romantica", "comedia"]
 
 let arrayPeliculas=[]
+
+const pelisLocal= localStorage.setItem("arrayPelis", arrayPeliculas) || [];
 
 //todo Objetos 
 
@@ -32,14 +37,6 @@ let regExp={
     today:today
 }
 
-
-
-let objPelicula={
-    titulo:null,
-    director:null,
-    year:null,
-    genero:null
-}
 
 
 //* EVENTOS
@@ -85,7 +82,7 @@ function validarFormulario() {
         objValidar.director=false
     }
 
-    if (!(isNaN(year)) && year > 999 && year < 10000) {
+    if (!(isNaN(year)) &&  year <= today) {
         objValidar.year = true
     } 
     else {
@@ -116,7 +113,11 @@ function validarFormulario() {
             generos,
         }
         arrayPeliculas.push(objPelicula)
+
+        localStorage.setItem("pelis",JSON.stringify(objPelicula))
+
         return  pintarTabla(arrayPeliculas) 
+        
     }
 }
 
@@ -151,6 +152,19 @@ function pintarTabla(array) {
         arrayPeliculas=[]
 }
 
+
+// function pillarLocal() {
+
+//    let pelisLocal1=  JSON.parse(localStorage.getItem('pelis')) || [];
+
+//   console.log(pelisLocal1);
+
+//  return pintarTabla(pelisLocal1)
+// }
 pintarGeneros()
-console.log(arrayPeliculas);
+// pillarLocal()
+
+
+// console.log(arrayPeliculas);
+
 
